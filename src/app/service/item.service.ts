@@ -17,7 +17,7 @@ export class ItemController {
         this.item = itemModel.data;
         this.itemSubject.next(this.item);
 
-        itemModel.forLoop((item, index) => {
+        itemModel.forEach((item, index) => {
             console.log(`Item at index ${index} has id: ${item.id} and testName: ${item.testName}`);
         })
         return itemModel;
@@ -56,23 +56,23 @@ class ItemModel {
         }))
     }
 
-    // 新增 forLoop 方法
-    forLoop(callback: (item: TestItem, index: number, array: TestItem[]) => void): void {
+    // 新增 forEach 方法
+    forEach(callback: (item: TestItem, index: number, array: TestItem[]) => void): void {
         this.data.forEach((item, index, array) => {
             callback(item, index, array);
         });
     }
 
-    // 新增 forMap 方法
-    forMap(callback: (item: TestItem, index: number, array: TestItem[]) => TestItem): ItemModel {
+    // 新增 map 方法
+    map(callback: (item: TestItem, index: number, array: TestItem[]) => TestItem): ItemModel {
         const newData = this.data.map((item, index, array) => {
             return callback(item, index, array);
         });
         return new ItemModel(newData);
     }
 
-    // 新增 forFilter 方法
-    forFilter(callback: (item: TestItem, index: number, array: TestItem[]) => boolean): ItemModel {
+    // 新增 filter 方法
+    filter(callback: (item: TestItem, index: number, array: TestItem[]) => boolean): ItemModel {
         const newData = this.data.filter((item, index, array) => {
             return callback(item, index, array);
         });
