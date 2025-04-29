@@ -16,14 +16,18 @@ export class AppComponent implements OnInit {
     });
 
     this.itemService.itemController([
-      { id: 1, testName: 'Test 1' },
-      { id: 2, testName: 'Test 2' }
+      { id: 2, testName: 'Test 2' },
+      { id: 1, testName: 'Test 1' }
     ]);
 
     setTimeout(() => {
       this.itemService.itemController()
-        .changeIndexName("Index", 1)
-        .changeIndexOfName("IndexOf", 1);
+        .sort((a, b) => a.id - b.id)
+        .map(item => {
+          item.testName = "987";
+          return item;
+        });
+      // .print()
     }, 5000);
   }
 }
