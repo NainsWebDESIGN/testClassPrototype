@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemController } from '@service/item.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +7,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  testSub = new Subscription();
+  data;
   constructor(private itemService: ItemController) { }
   ngOnInit() {
     this.itemService.item$.subscribe(data => {
-      console.log(data);
+      this.data = data;
+      console.log(this.data);
     });
 
     this.itemService.itemController([
@@ -23,11 +23,15 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       this.itemService.itemController()
         .sort((a, b) => a.id - b.id)
-        .map(item => {
-          item.testName = "987";
+        .map((item, index) => {
+          item.testName = (index == 1) ? "123" : "456";
           return item;
         });
-      // .print()
     }, 5000);
+
+
+    const test = gold => gold.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    console.log(test(78462159));
   }
 }

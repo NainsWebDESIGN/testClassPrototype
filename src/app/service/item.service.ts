@@ -16,6 +16,7 @@ export class ItemController {
         const itemModel = new ItemModel((!items) ? this.item : items);
         this.item = itemModel.data;
         this.itemSubject.next(this.item);
+
         return itemModel;
     }
 }
@@ -27,7 +28,7 @@ class ItemModel {
     }
     print(): ItemModel {
         console.log(this.data);
-        return new ItemModel(this.data);
+        return this;
     }
     // 新增 forEach 方法
     forEach(callback: (item: TestItem, index: number, array: TestItem[]) => void): void {
@@ -35,14 +36,18 @@ class ItemModel {
     }
     // 新增 map 方法
     map(callback: (item: TestItem, index: number, array: TestItem[]) => TestItem): ItemModel {
-        return new ItemModel(this.data.map(callback));
+        this.data = this.data.map(callback);
+        return this;
     }
     // 新增 filter 方法
     filter(callback: (item: TestItem, index: number, array: TestItem[]) => boolean): ItemModel {
-        return new ItemModel(this.data.filter(callback));
+        this.data = this.data.filter(callback);
+        return this;
     }
     // 新增 sort 方法
     sort(callback: (a: TestItem, b: TestItem) => number): ItemModel {
-        return new ItemModel(this.data.sort(callback));
+        this.data = this.data.sort(callback);
+        return this;
     }
+
 }
